@@ -48,7 +48,7 @@ export class NodesPanel extends React.Component {
             }
         };
 
-        let input_url = 'http://localhost:8080/api/input';
+        let input_url = 'https://floater-java.herokuapp.com/api/input';
 
         fetch(input_url)
             .then(response => response.json())

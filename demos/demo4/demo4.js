@@ -5,13 +5,12 @@ import {connect} from 'react-redux';
 import * as actions from './actions';
 import {NodesPanel} from './components/NodesPanel';
 import {Diagram} from './components/Diagram';
-import * as samples from '../../src/Sample';
-import './demo4.scss';
 import * as RJD from "../../src/main";
 import {diagramEngine} from "./components/Engine";
 import {Button} from 'react-bootstrap';
 import {Controls} from "./components/Controls";
 import {DiagramModel} from "../../src/main";
+import './demo4.scss';
 
 class Demo extends React.Component {
 
@@ -25,15 +24,13 @@ class Demo extends React.Component {
             diagramValue: ''
         };
         this.state = this.homeState;
+        this.diagramTitles = [];
+        this.show = false;
 
-        let titles = 'http://localhost:8080/api/titles';
+        let titles = 'https://floater-java.herokuapp.com/api/titles';
         fetch(titles)
             .then(response => {setTimeout(() => null, 0); return response.json()})
             .then(input => {console.log(input); this.diagramTitles = input});
-
-        // this.diagramTitles = ['er', 'b', 'az', 'BIG_OBJECT'];
-        this.diagramTitles = [];
-        this.show = false;
 
         this.showIndexPage = this.showIndexPage.bind(this);
         this.showWorkflowPage = this.showWorkflowPage.bind(this);
@@ -134,7 +131,7 @@ class Demo extends React.Component {
     }
 
     setWorkflow() {
-        let title_url = 'http://localhost:8080/api/title/' + String(this.state.diagramValue);
+        let title_url = 'https://floater-java.herokuapp.com/api/title/' + String(this.state.diagramValue);
         fetch(title_url)
             .then(response => {setTimeout(() => null, 0); return response.json()})
             .then(input => {this.setState({workflow: JSON.parse(input.flow)})});
@@ -175,7 +172,7 @@ class Demo extends React.Component {
 
         if (!status) {
             console.log(content);
-            let output_url = 'http://localhost:8080/api/title';
+            let output_url = 'https://floater-java.herokuapp.com/api/title';
 
             fetch(output_url,
                 {
