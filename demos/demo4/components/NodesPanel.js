@@ -262,7 +262,6 @@ export class NodesPanel extends React.Component {
     }
 
     renderGroupDetails(sub) {
-        console.log(sub);
         return (
             <div>
                 {
@@ -279,19 +278,24 @@ export class NodesPanel extends React.Component {
     }
 
     render() {
-        let pan = this.state.input;
-        // pan = JSON.stringify(pan);
-        // console.log(pan);
-        // pan = pan.trim();
-        // console.log(pan);
-        // pan = pan.replace(/\\+r\\+n/g,'\\\\r\\\\n');
-        console.log(String(pan));
-        pan = JSON.parse(JSON.stringify(pan));
-        console.log(pan);
-        pan = '{"Sinks":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"sink"}],"maxCount":{"sink":1,"source":3,"processor":3},"Sources":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"source"}],"Processors":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Splitter","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Transformer","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Parser","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Formatter","type":"processor"}]}';
+        let pan =
+            '{\n' +
+            '"maxCount":{"sink":1,"source":3,"processor":3},\n' +
+            '\n' +
+            '"Sources":\n' +
+            '[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"source"}\n' +
+            '],\n' +
+            '\n' +
+            '"Processors":\n' +
+            '[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Splitter","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Transformer","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Parser","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Formatter","type":"processor"}\n' +
+            '],\n' +
+            '\n' +
+            '"Sinks":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"sink"}\n' +
+            ']\n' +
+            '}';
+
         pan = JSON.parse(pan);
         NodesPanel.panelObject = pan;
-        console.log(NodesPanel.panelObject);
 
         let newObj = {};
 

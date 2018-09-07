@@ -30,7 +30,7 @@ class Demo extends React.Component {
         let titles = 'https://floater-java.herokuapp.com/api/titles';
         fetch(titles)
             .then(response => {setTimeout(() => null, 0); return response.json()})
-            .then(input => {console.log(input); this.diagramTitles = input});
+            .then(input => {this.diagramTitles = input});
 
         this.showIndexPage = this.showIndexPage.bind(this);
         this.showWorkflowPage = this.showWorkflowPage.bind(this);
@@ -169,9 +169,9 @@ class Demo extends React.Component {
 
         let nodes = JSON.parse(content).nodes;
         let status = DiagramModel.checkEmptinessOfNodes(nodes);
-
-        if (!status) {
-            console.log(content);
+        console.log(status);
+        if (status) {
+            console.log(status);
             let output_url = 'https://floater-java.herokuapp.com/api/title';
 
             fetch(output_url,

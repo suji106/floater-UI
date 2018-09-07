@@ -26,7 +26,7 @@ export class DiagramModel extends BaseEntity {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     deSerializeDiagram(object, diagramEngine) {
