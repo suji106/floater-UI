@@ -38,12 +38,26 @@ export class NodesPanel extends React.Component {
     constructor(props) {
         super(props);
         this.color = '';
+
+        this.state = {
+            input: {
+                "maxCount": {},
+                "Sources": [],
+                "Processors": [],
+                "Sinks": []
+            }
+        };
+
+        let input_url = 'http://localhost:8080/api/input';
+
+        fetch(input_url)
+            .then(response => response.json())
+            .then(input => {
+                this.setState({input: input.flow});
+            });
+
         this.setColor = this.setColor.bind(this);
         this.renderGroupDetails = this.renderGroupDetails.bind(this);
-    }
-
-    static getPanelObject() {
-        return this.panelObject;
     }
 
     static panelObject = {
@@ -227,6 +241,17 @@ export class NodesPanel extends React.Component {
         }]
     };
 
+    // static panelObject = {
+    //     "maxCount": {},
+    //     "Sources": [],
+    //     "Processors": [],
+    //     "Sinks": []
+    // };
+
+    static getPanelObject() {
+        return NodesPanel.panelObject;
+    }
+
     setColor(type) {
         if (type === 'sink')
             return this.color = nodeColors.OUTPUT_NODE_COLOR;
@@ -237,6 +262,7 @@ export class NodesPanel extends React.Component {
     }
 
     renderGroupDetails(sub) {
+        console.log(sub);
         return (
             <div>
                 {
@@ -253,6 +279,20 @@ export class NodesPanel extends React.Component {
     }
 
     render() {
+        let pan = this.state.input;
+        // pan = JSON.stringify(pan);
+        // console.log(pan);
+        // pan = pan.trim();
+        // console.log(pan);
+        // pan = pan.replace(/\\+r\\+n/g,'\\\\r\\\\n');
+        console.log(String(pan));
+        pan = JSON.parse(JSON.stringify(pan));
+        console.log(pan);
+        pan = '{"Sinks":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"sink"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"sink"}],"maxCount":{"sink":1,"source":3,"processor":3},"Sources":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Sftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Ftp","type":"source"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Jms","type":"source"}],"Processors":[{"settings":{"abc":{"options":["a","b","c"],"selected":"b"},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":"p"}},"name":"Splitter","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Transformer","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Parser","type":"processor"},{"settings":{"abc":{"options":["a","b","c"],"selected":""},"inputs":{"zzz":"","lll":""},"xyz":{"options":["p","q","r"],"selected":""}},"name":"Formatter","type":"processor"}]}';
+        pan = JSON.parse(pan);
+        NodesPanel.panelObject = pan;
+        console.log(NodesPanel.panelObject);
+
         let newObj = {};
 
         for (let i in NodesPanel.panelObject) {
@@ -265,8 +305,8 @@ export class NodesPanel extends React.Component {
         let TITLE_BLOCK_HEIGHT = 100;
 
         let height = (window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight) - TITLE_BLOCK_HEIGHT;
+            || document.documentElement.clientHeight
+            || document.body.clientHeight) - TITLE_BLOCK_HEIGHT;
 
         return (
             <div style={{height: height}} className='nodes-panel'>

@@ -26,7 +26,13 @@ class Demo extends React.Component {
         };
         this.state = this.homeState;
 
-        this.diagramTitles = ['Tester', 'TEST_OBJ_1', 'TEST_OBJ_2', 'BIG_OBJECT'];
+        let titles = 'http://localhost:8080/api/titles';
+        fetch(titles)
+            .then(response => {setTimeout(() => null, 0); return response.json()})
+            .then(input => {console.log(input); this.diagramTitles = input});
+
+        // this.diagramTitles = ['er', 'b', 'az', 'BIG_OBJECT'];
+        this.diagramTitles = [];
         this.show = false;
 
         this.showIndexPage = this.showIndexPage.bind(this);
@@ -37,6 +43,7 @@ class Demo extends React.Component {
         this.getDiagramEngine = this.getDiagramEngine.bind(this);
         this.saveWorkFlow = this.saveWorkFlow.bind(this);
         this.getHeader = this.getHeader.bind(this);
+        this.setWorkflow = this.setWorkflow.bind(this);
         this.getHomeState = this.getHomeState.bind(this);
         this.getZoom = this.getZoom.bind(this);
     }
@@ -44,8 +51,9 @@ class Demo extends React.Component {
     getHomeState() {
         if (this.state.currentAgenda !== '') {
             if (window.confirm("Are you sure to navigate to home page of ID?")) {
-                this.show = false;
-                return (this.setState(this.homeState));
+                // this.show = false;
+                // return (this.setState(this.homeState));
+                window.location.reload();
             }
         }
     }
@@ -58,19 +66,19 @@ class Demo extends React.Component {
                     <tr>
                         <td>
                             <p className="statestr-header" onClick={() => this.getHomeState()}>
-                                <span className="statestr-s-header">
-                                    S
-                                </span>
-                                TATE
-                                <span className="statestr-s-header">
-                                    S
-                                </span>
-                                TREET
+                                {/*<span className="statestr-s-header">*/}
+                                    {/*S*/}
+                                {/*</span>*/}
+                                {/*TATE*/}
+                                {/*<span className="statestr-s-header">*/}
+                                    {/*S*/}
+                                {/*</span>*/}
+                                {/*TREET*/}
                             </p>
                         </td>
                         <td>
                             <p className="workflow-w-header" onClick={() => this.getHomeState()}>
-                                Interface Definition
+                                Floater
                             </p>
                         </td>
                     </tr>
@@ -125,6 +133,13 @@ class Demo extends React.Component {
         );
     }
 
+    setWorkflow() {
+        let title_url = 'http://localhost:8080/api/title/' + String(this.state.diagramValue);
+        fetch(title_url)
+            .then(response => {setTimeout(() => null, 0); return response.json()})
+            .then(input => {this.setState({workflow: JSON.parse(input.flow)})});
+    }
+
     getCurrentDiagram() {
         let model = this.props.model;
         if (model !== null) {
@@ -132,8 +147,8 @@ class Demo extends React.Component {
             return model;
         }
 
-        if (String(this.state.currentAgenda) === 'update') {
-            return samples[this.state.diagramValue];
+        if (String(this.state.currentAgenda) === 'update' && this.state.diagramValue !== '') {
+            return this.state.workflow;
         }
 
         return model;
@@ -149,6 +164,7 @@ class Demo extends React.Component {
     }
 
     saveWorkFlow(object) {
+        this.setState({alert: true});
         const content = object ?
             JSON.stringify(object.serializeDiagram(), null, 2)
             :
@@ -159,6 +175,25 @@ class Demo extends React.Component {
 
         if (!status) {
             console.log(content);
+            let output_url = 'http://localhost:8080/api/title';
+
+            fetch(output_url,
+                {
+                    body: JSON.stringify(JSON.parse(content)),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'post',
+                    credentials: 'include'
+                }
+            ).then(response => {
+                if (String(response.status) === '200') {
+                    alert("Save Successful");
+                }
+                else {
+                    alert("Save Unsuccessful");
+                }
+            });
         }
     }
 
@@ -198,9 +233,7 @@ class Demo extends React.Component {
                     null
                 }
                 {this.state.currentAgenda === '' ?
-                    <Button className="button-generic" onClick={() => {
-                        this.setState({currentAgenda: 'update'});
-                    }}>
+                    <Button className="button-generic" onClick={() => this.setState({currentAgenda: 'update'})}>
                         Update a Workflow
                     </Button>
                     :
@@ -238,6 +271,7 @@ class Demo extends React.Component {
                             }
                             else {
                                 this.setState({mode: 'update'})
+                                this.setWorkflow();
                             }
                         }
                         else {

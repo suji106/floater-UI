@@ -3,6 +3,7 @@ import * as RJD from '../../../../../src/main';
 import {SourceNodeModel} from "./SourceNodeModel";
 import * as nodeColors from '../../../ColorConstants'
 import ModalView from "../../../../../src/modal/ModalView";
+import 'react-bootstrap';
 
 export class SourceNodeWidget extends React.Component {
 

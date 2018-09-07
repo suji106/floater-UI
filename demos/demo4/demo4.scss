@@ -52,7 +52,7 @@ button {
 
 .workflow-header {
   color: #fafafa;
-  background: #092e5d;
+  background: #c84504;
   padding-left: 30px;
 
   .statestr-header {
@@ -61,6 +61,7 @@ button {
     font-size: 30px;
     cursor: pointer;
     margin: 20px;
+    height: 38px;
 
     .statestr-s-header {
       padding-left: 4px;
@@ -74,15 +75,15 @@ button {
     font-weight: bold;
     font-size: 20px;
     position: absolute;
-    left: 80%;
+    left: 45%;
     top: 15px;
     cursor: pointer;
   }
 }
 
-.fa-edit {
-  cursor: pointer;
-}
+//.fa-edit {
+//  cursor: pointer;
+//}
 
 .select-diagram-title-home {
   margin-top: 18px;
@@ -137,7 +138,7 @@ button {
 
 .title-div {
   text-align: left;
-  background: #5c6a73;
+  background: #d0a235;
   color: white;
   font-family: "Times New Roman";
   padding-left: 20px;
